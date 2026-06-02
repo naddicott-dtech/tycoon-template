@@ -29,3 +29,6 @@ signal day_ended(day_number)      # posted when a new day begins
 
 @warning_ignore("UNUSED_SIGNAL")
 signal tick(delta_time)           # posted every single frame (see TimeManager)
+
+@warning_ignore("UNUSED_SIGNAL")
+signal game_over(did_win)         # posted once when the player wins (true) or loses (false)
