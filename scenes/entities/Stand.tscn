@@ -1,8 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://jl44k1cogg4w"]
+[gd_scene load_steps=5 format=3 uid="uid://jl44k1cogg4w"]
 
-[ext_resource type="Texture2D" uid="uid://b8u8accr8kwjg" path="res://icon.svg" id="1_8td5s"]
 [ext_resource type="Script" uid="uid://cvc3nskyjv6x3" path="res://scenes/entities/Stand.gd" id="2_2rcrt"]
+[ext_resource type="Texture2D" uid="uid://dokwyb32yd2fw" path="res://assets/stand_level_1.svg" id="3_qhtib"]
+[ext_resource type="Texture2D" uid="uid://bdj078vtnoo6f" path="res://assets/stand_level_2.svg" id="4_3yig3"]
+[ext_resource type="Texture2D" uid="uid://c5enupo3g6o0a" path="res://assets/stand_level_3.svg" id="5_v6v0d"]
 
 [node name="Stand" type="Sprite2D"]
-texture = ExtResource("1_8td5s")
+texture = ExtResource("3_qhtib")
 script = ExtResource("2_2rcrt")
+level_1_texture = ExtResource("3_qhtib")
+level_2_texture = ExtResource("4_3yig3")
+level_3_texture = ExtResource("5_v6v0d")
