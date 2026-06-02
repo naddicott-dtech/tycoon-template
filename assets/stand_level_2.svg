@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- PLACEHOLDER ART for a level-2 stand. Replace with your own picture. -->
+  <rect x="4" y="4" width="120" height="120" rx="8" fill="#999999" stroke="#222222" stroke-width="4" stroke-dasharray="8 6"/>
+  <rect x="48" y="22" width="12" height="12" fill="#222222"/>
+  <rect x="68" y="22" width="12" height="12" fill="#222222"/>
+</svg>
