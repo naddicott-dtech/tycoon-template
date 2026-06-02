@@ -16,10 +16,19 @@ enum Tier { LEVEL_1, LEVEL_2, LEVEL_3 }
 @export var tier: Tier = Tier.LEVEL_1
 @export var base_income: int = 5      # money earned per day at LEVEL_1
 
+# One picture per level — an artist drops a real image into each slot. The stand
+# shows the picture that matches its tier (see _show_level_picture below). This
+# is the SAME bridge as the income: one dropdown drives both how much it earns
+# AND how it looks.
+@export var level_1_texture: Texture2D
+@export var level_2_texture: Texture2D
+@export var level_3_texture: Texture2D
+
 func _ready() -> void:
 	# Subscribe to the bulletin board: when a day ends, earn money. Because each
 	# Stand signs itself up here, a duplicated Stand just works — no wiring.
 	SignalBus.day_ended.connect(_on_day_ended)
+	_show_level_picture()
 
 func _on_day_ended(_day_number: int) -> void:
 	Globals.add_money(income_for_day())
@@ -35,3 +44,18 @@ func _tier_multiplier() -> int:
 		Tier.LEVEL_2: return 3
 		Tier.LEVEL_3: return 8
 		_: return 1   # safety net if a new Tier is added without a line above
+
+# Show the picture that matches this stand's level. It updates when you press
+# Play. If a level's slot is left empty, the stand just keeps the picture it
+# already has, so it never goes invisible.
+func _show_level_picture() -> void:
+	match tier:
+		Tier.LEVEL_1:
+			if level_1_texture:
+				texture = level_1_texture
+		Tier.LEVEL_2:
+			if level_2_texture:
+				texture = level_2_texture
+		Tier.LEVEL_3:
+			if level_3_texture:
+				texture = level_3_texture
