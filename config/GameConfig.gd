@@ -1,21 +1,18 @@
 # GameConfig.gd
 #
 # A "Resource" is a little container of values you can fill in and save as a
-# file. This one holds the game's BALANCE KNOBS — the numbers a designer changes
-# to make the game easier or harder.
+# file. This one holds the few GLOBAL "new game" values that don't belong to any
+# single node — the money you start with and the first day's number.
 #
-# Why a Resource instead of plain variables in Globals? Variables on an autoload
-# don't show up in the Inspector (there's no node to click on). A Resource file
-# DOES: double-click "config/game_config.tres" in the FileSystem dock and these
-# fields appear on the right, ready to edit — no code needed.
+# MOST balance knobs do NOT live here. They live on the node that owns them: a
+# stand's income is on the Stand, the goal is on the GoalManager, the day length
+# is on the TimeManager. You tune those right on the node, in the Inspector, in
+# context. This file is only for values that have no node to live on, because
+# they belong to an autoload (Globals).
 #
-# "class_name GameConfig" registers the type so the editor lets you create one
-# (right-click in FileSystem > New Resource… > GameConfig).
+# To edit these: double-click "config/game_config.tres" in the FileSystem dock.
 class_name GameConfig
 extends Resource
 
 @export var starting_money: int = 100   # money the player begins with
 @export var start_day: int = 1          # the number of the first day
-@export var goal_money: int = 500       # reach this much money to WIN
-@export var deadline_day: int = 10      # you must hit the goal by the end of this day
-@export var show_debug_buttons: bool = true   # show the cheat buttons while testing

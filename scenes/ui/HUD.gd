@@ -6,6 +6,7 @@
 extends Control
 
 @export var debug_add_amount: int = 10   # how much the cheat button adds
+@export var show_debug_buttons: bool = true   # show the cheat button while testing
 
 # @onready means "grab this once the scene is loaded, before _ready() runs."
 # The % is a shortcut for "find the node named MoneyLabel that I marked as a
@@ -23,8 +24,8 @@ func _ready():
 	# values, instead of being blank until the first change happens.
 	_on_money_changed(Globals.money)
 	_on_day_ended(Globals.day)
-	# Hide the cheat button unless debug mode is on (set in Globals' Inspector).
-	%AddMoneyButton.visible = Globals.show_debug_buttons
+	# Hide the cheat button unless debug mode is on (set on this HUD in the Inspector).
+	%AddMoneyButton.visible = show_debug_buttons
 	# The "End Day" button moves the game forward by one day. We connect it here
 	# in code so it's wired the instant the scene loads — you never have to open
 	# the Node panel and connect a signal yourself.

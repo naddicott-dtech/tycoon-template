@@ -21,26 +21,20 @@ var config: GameConfig
 var money := 0
 var day := 1
 
-# These MIRROR the balance knobs. They start at sensible defaults and get
-# overwritten by the config file (if it exists) when the game starts. Reading
-# e.g. Globals.goal_money is always safe, even before the file is made.
+# These MIRROR the global config values. They start at sensible defaults and get
+# overwritten by the config file (if it exists) when the game starts. (Per-rule
+# knobs like the goal live on their own nodes, e.g. GoalManager — not here.)
 var starting_money := 100
 var start_day := 1
-var goal_money := 500
-var deadline_day := 10
-var show_debug_buttons := true
 
 # _ready() runs once, automatically, as soon as this node enters the game.
 func _ready() -> void:
-	# If the config file exists, copy its knobs into our mirrors. (Checking first
+	# If the config file exists, copy its values into our mirrors. (Checking first
 	# means a brand-new project that hasn't made the file yet still runs fine.)
 	if ResourceLoader.exists(CONFIG_PATH):
 		config = load(CONFIG_PATH)
 		starting_money = config.starting_money
 		start_day = config.start_day
-		goal_money = config.goal_money
-		deadline_day = config.deadline_day
-		show_debug_buttons = config.show_debug_buttons
 	# Copy the starting values into the live values.
 	money = starting_money
 	day = start_day
