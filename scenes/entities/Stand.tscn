@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://jl44k1cogg4w"]
+
+[ext_resource type="Texture2D" uid="uid://b8u8accr8kwjg" path="res://icon.svg" id="1_8td5s"]
+[ext_resource type="Script" uid="uid://cvc3nskyjv6x3" path="res://scenes/entities/Stand.gd" id="2_2rcrt"]
+
+[node name="Stand" type="Sprite2D"]
+texture = ExtResource("1_8td5s")
+script = ExtResource("2_2rcrt")

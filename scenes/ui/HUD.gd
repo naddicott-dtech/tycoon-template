@@ -25,6 +25,10 @@ func _ready():
 	_on_day_ended(Globals.day)
 	# Hide the cheat button unless debug mode is on (set in Globals' Inspector).
 	%AddMoneyButton.visible = Globals.show_debug_buttons
+	# The "End Day" button moves the game forward by one day. We connect it here
+	# in code so it's wired the instant the scene loads — you never have to open
+	# the Node panel and connect a signal yourself.
+	%EndDayButton.pressed.connect(Globals.end_day)
 
 # A "handler" is just a function that runs in response to a signal. By Godot
 # convention these are named _on_<thing>. This one updates the money label.

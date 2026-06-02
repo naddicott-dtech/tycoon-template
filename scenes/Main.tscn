@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8vsrpns1aeg7"]
+[gd_scene load_steps=6 format=3 uid="uid://c8vsrpns1aeg7"]
 
 [ext_resource type="PackedScene" uid="uid://bjl08sv1ddywf" path="res://scenes/managers/TimeManager.tscn" id="1_rvslj"]
 [ext_resource type="Script" uid="uid://cqwlteyggf7h0" path="res://scenes/Main.gd" id="1_vcsgt"]
 [ext_resource type="PackedScene" uid="uid://bta1s1d428yeq" path="res://scenes/ui/HUD.tscn" id="2_0bbpv"]
+[ext_resource type="PackedScene" uid="uid://jl44k1cogg4w" path="res://scenes/entities/Stand.tscn" id="2_rarhs"]
+[ext_resource type="Script" uid="uid://bmns8jmjbi0rx" path="res://scenes/ui/MessageCanvas.gd" id="5_vcsgt"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_vcsgt")
@@ -12,6 +14,9 @@ script = ExtResource("1_vcsgt")
 [node name="TileMapLayer" type="TileMapLayer" parent="WorldRoot"]
 
 [node name="Entities" type="Node2D" parent="WorldRoot"]
+
+[node name="Stand" parent="WorldRoot/Entities" instance=ExtResource("2_rarhs")]
+position = Vector2(578, 302)
 
 [node name="Spawners" type="Node2D" parent="WorldRoot"]
 
@@ -26,6 +31,37 @@ offset_left = 54.0
 offset_top = 34.0
 offset_right = 94.0
 offset_bottom = 74.0
+
+[node name="Message" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("5_vcsgt")
+
+[node name="MessageLabel" type="Label" parent="UI/Message"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 1
+
+[node name="DismissButton" type="Button" parent="UI/Message"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
 
 [node name="Panels" type="Control" parent="UI"]
 layout_mode = 3
