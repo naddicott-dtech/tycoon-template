@@ -16,7 +16,7 @@ loses. Ships playable, ugly, and unbalanced on purpose.
 
 ## The duplicatable block
 `scenes/entities/Stand.tscn` — copy with Ctrl+D inside the level
-(`scenes/levels/level1.tscn`), retune in the Inspector. Each instance self-wires
+(`scenes/levels/Level1.tscn`), retune in the Inspector. Each instance self-wires
 to `day_ended` in `_ready()`. No signal hookup needed.
 
 ## Tuning knobs (where each lives — see DECISIONS D-019)
@@ -42,7 +42,7 @@ Artist (`assets/` + the HUD/Message look) · Balance/Tuning (the knobs above +
 `autoload/` Globals · SignalBus · SaveManager · AudioManager
 `config/` GameConfig.gd + game_config.tres
 `assets/` stand_level_1/2/3.svg (placeholders)
-`scenes/` Main (holds WorldRoot/Level1) · levels/level1 (Level.gd: per-level goal) · entities/Stand · managers/{TimeManager,GoalManager,PlayLogger} · ui/{HUD,MessageCanvas}
+`scenes/` Main (holds WorldRoot/Level1) · levels/Level1 (Level.gd: per-level goal) · entities/Stand · managers/{TimeManager,GoalManager,PlayLogger} · ui/{HUD,MessageCanvas}
 
 ## Pure logic seams (for tests / autograder / AI checks)
 - `Stand.income_for_day()` → `base_income * _tier_multiplier()`

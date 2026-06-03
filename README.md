@@ -34,10 +34,10 @@ Almost everything happens in the **editor**, by **duplicating** things and
 **changing values in the Inspector** (the panel on the right). Any variable
 written with `@export` in a script shows up there as a box you can change.
 
-**Your level is `scenes/levels/level1.tscn`** — open it; that's your canvas.
+**Your level is `scenes/levels/Level1.tscn`** — open it; that's your canvas.
 (`Main.tscn` is the engine around it — the managers and UI you don't need to
 touch.) **The duplicatable block is the `Stand`.** To add another money-maker:
-1. In `level1.tscn`, click the `Stand` under `Entities`.
+1. In `Level1.tscn`, click the `Stand` under `Entities`.
 2. Press **Ctrl+D** to copy it. Drag the copy somewhere else.
 3. With the copy selected, change its values in the Inspector (below).
 
@@ -57,7 +57,7 @@ it makes sense. Click the node, look at the Inspector.
 | How much a stand earns | a `Stand` | **Base Income** |
 | A stand's pictures | a `Stand` | **Level 1/2/3 Texture** |
 | The money you start with | `config/game_config.tres` | **Starting Money** |
-| The goal and the deadline | the `Level1` root (in `level1.tscn`) | **Goal Money**, **Deadline Day** |
+| The goal and the deadline | the `Level1` root (in `Level1.tscn`) | **Goal Money**, **Deadline Day** |
 | How a day passes (button vs timer) | `Managers/TimeManager` | **Time Mode**, **Seconds Per Day** |
 | The mission / message text | `UI/Message` | **Messages**, **Win/Lose Message** |
 | Show or hide the cheat button | the `HUD` root | **Show Debug Buttons** |
@@ -102,7 +102,7 @@ tycoon-template/
 ├─ scenes/
 │  ├─ Main.tscn / .gd     the engine: the level holder + managers + UI
 │  ├─ levels/
-│  │  └─ level1.tscn      YOUR LEVEL — your stands live here; its root holds the
+│  │  └─ Level1.tscn      YOUR LEVEL — your stands live here; its root holds the
 │  │                      level's goal (Level.gd)
 │  ├─ entities/
 │  │  └─ Stand.tscn/.gd   a money-making stand — DUPLICATE THIS into your level
@@ -118,7 +118,7 @@ tycoon-template/
 
 `Main.tscn` is the **engine**: `WorldRoot` holds your current level
 (`WorldRoot/Level1`), `Managers` runs the systems, and `UI` is what's on screen.
-You build inside **`level1.tscn`**; `Main` is just the frame around it.
+You build inside **`Level1.tscn`**; `Main` is just the frame around it.
 
 ---
 
