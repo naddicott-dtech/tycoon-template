@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bjl08sv1ddywf" path="res://scenes/managers/TimeManager.tscn" id="1_rvslj"]
 [ext_resource type="Script" uid="uid://cqwlteyggf7h0" path="res://scenes/Main.gd" id="1_vcsgt"]
 [ext_resource type="PackedScene" uid="uid://bta1s1d428yeq" path="res://scenes/ui/HUD.tscn" id="2_0bbpv"]
-[ext_resource type="PackedScene" uid="uid://jl44k1cogg4w" path="res://scenes/entities/Stand.tscn" id="2_rarhs"]
+[ext_resource type="PackedScene" uid="uid://drn8utmegob01" path="res://scenes/levels/level1.tscn" id="2_nxtc6"]
 [ext_resource type="Script" uid="uid://bri1yxrtr7vbc" path="res://scenes/managers/GoalManager.gd" id="4_nxtc6"]
 [ext_resource type="Script" uid="uid://d1po7mi0syp18" path="res://scenes/managers/PlayLogger.gd" id="5_jlsqs"]
 [ext_resource type="Script" uid="uid://bmns8jmjbi0rx" path="res://scenes/ui/MessageCanvas.gd" id="5_vcsgt"]
@@ -13,15 +13,7 @@ script = ExtResource("1_vcsgt")
 
 [node name="WorldRoot" type="Node2D" parent="."]
 
-[node name="TileMapLayer" type="TileMapLayer" parent="WorldRoot"]
-
-[node name="Entities" type="Node2D" parent="WorldRoot"]
-
-[node name="Stand" parent="WorldRoot/Entities" instance=ExtResource("2_rarhs")]
-position = Vector2(578, 302)
-tier = 1
-
-[node name="Spawners" type="Node2D" parent="WorldRoot"]
+[node name="Level1" parent="WorldRoot" instance=ExtResource("2_nxtc6")]
 
 [node name="Managers" type="Node" parent="."]
 

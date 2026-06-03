@@ -34,8 +34,10 @@ Almost everything happens in the **editor**, by **duplicating** things and
 **changing values in the Inspector** (the panel on the right). Any variable
 written with `@export` in a script shows up there as a box you can change.
 
-**The duplicatable block is the `Stand`.** To add another money-maker:
-1. In `scenes/Main.tscn`, click the `Stand` under `WorldRoot/Entities`.
+**Your level is `scenes/levels/level1.tscn`** — open it; that's your canvas.
+(`Main.tscn` is the engine around it — the managers and UI you don't need to
+touch.) **The duplicatable block is the `Stand`.** To add another money-maker:
+1. In `level1.tscn`, click the `Stand` under `Entities`.
 2. Press **Ctrl+D** to copy it. Drag the copy somewhere else.
 3. With the copy selected, change its values in the Inspector (below).
 
@@ -55,7 +57,7 @@ it makes sense. Click the node, look at the Inspector.
 | How much a stand earns | a `Stand` | **Base Income** |
 | A stand's pictures | a `Stand` | **Level 1/2/3 Texture** |
 | The money you start with | `config/game_config.tres` | **Starting Money** |
-| The goal and the deadline | `Managers/GoalManager` | **Goal Money**, **Deadline Day** |
+| The goal and the deadline | the `Level1` root (in `level1.tscn`) | **Goal Money**, **Deadline Day** |
 | How a day passes (button vs timer) | `Managers/TimeManager` | **Time Mode**, **Seconds Per Day** |
 | The mission / message text | `UI/Message` | **Messages**, **Win/Lose Message** |
 | Show or hide the cheat button | the `HUD` root | **Show Debug Buttons** |
@@ -98,9 +100,12 @@ tycoon-template/
 │  └─ game_config.tres    starting money / first day  (shape from GameConfig.gd)
 ├─ assets/                placeholder pictures — REPLACE THESE
 ├─ scenes/
-│  ├─ Main.tscn / .gd     the game itself
+│  ├─ Main.tscn / .gd     the engine: the level holder + managers + UI
+│  ├─ levels/
+│  │  └─ level1.tscn      YOUR LEVEL — your stands live here; its root holds the
+│  │                      level's goal (Level.gd)
 │  ├─ entities/
-│  │  └─ Stand.tscn/.gd   a money-making stand — DUPLICATE THIS
+│  │  └─ Stand.tscn/.gd   a money-making stand — DUPLICATE THIS into your level
 │  ├─ managers/
 │  │  ├─ TimeManager.gd    the day clock (manual button or real-time)
 │  │  ├─ GoalManager.gd    decides win / lose
@@ -111,8 +116,9 @@ tycoon-template/
 └─ project.godot
 ```
 
-`Main.tscn` is split into clear parts: `WorldRoot` (your stands and level),
-`Managers` (the systems running the game), and `UI` (what's on screen).
+`Main.tscn` is the **engine**: `WorldRoot` holds your current level
+(`WorldRoot/Level1`), `Managers` runs the systems, and `UI` is what's on screen.
+You build inside **`level1.tscn`**; `Main` is just the frame around it.
 
 ---
 

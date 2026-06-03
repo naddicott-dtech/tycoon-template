@@ -11,12 +11,13 @@ loses. Ships playable, ugly, and unbalanced on purpose.
 ## Core loop (who tells whom)
 `End Day button → Globals.end_day() → SignalBus.day_ended →`
 `  each Stand earns income_for_day() → Globals.add_money() → SignalBus.money_changed → HUD`
-`  GoalManager.evaluate() → (win/lose) → SignalBus.game_over → MessageCanvas`
+`  GoalManager reads current level's goal → evaluate() → SignalBus.game_over → MessageCanvas`
 `  PlayLogger appends a row to user://playlog.csv`
 
 ## The duplicatable block
-`scenes/entities/Stand.tscn` — copy with Ctrl+D, retune in the Inspector. Each
-instance self-wires to `day_ended` in `_ready()`. No signal hookup needed.
+`scenes/entities/Stand.tscn` — copy with Ctrl+D inside the level
+(`scenes/levels/level1.tscn`), retune in the Inspector. Each instance self-wires
+to `day_ended` in `_ready()`. No signal hookup needed.
 
 ## Tuning knobs (where each lives — see DECISIONS D-019)
 | Knob | Node / file | Type | Does |
@@ -25,8 +26,8 @@ instance self-wires to `day_ended` in `_ready()`. No signal hookup needed.
 | tier | Stand | enum LEVEL_1/2/3 | picks income multiplier (×1/×3/×8) AND picture |
 | base_income | Stand | int | money/day at LEVEL_1 |
 | level_1/2/3_texture | Stand | Texture2D | picture per level |
-| goal_money | Managers/GoalManager | int | money needed to win |
-| deadline_day | Managers/GoalManager | int | win by end of this day |
+| goal_money | Level1 root (Level.gd) | int | money to win THIS level |
+| deadline_day | Level1 root (Level.gd) | int | win by end of this day |
 | time_mode | Managers/TimeManager | enum MANUAL/REAL_TIME | button vs auto clock |
 | seconds_per_day | Managers/TimeManager | float | day length in REAL_TIME |
 | messages / win_message / lose_message | UI/Message | String[] / String | on-screen text |
@@ -41,7 +42,7 @@ Artist (`assets/` + the HUD/Message look) · Balance/Tuning (the knobs above +
 `autoload/` Globals · SignalBus · SaveManager · AudioManager
 `config/` GameConfig.gd + game_config.tres
 `assets/` stand_level_1/2/3.svg (placeholders)
-`scenes/` Main · entities/Stand · managers/{TimeManager,GoalManager,PlayLogger} · ui/{HUD,MessageCanvas}
+`scenes/` Main (holds WorldRoot/Level1) · levels/level1 (Level.gd: per-level goal) · entities/Stand · managers/{TimeManager,GoalManager,PlayLogger} · ui/{HUD,MessageCanvas}
 
 ## Pure logic seams (for tests / autograder / AI checks)
 - `Stand.income_for_day()` → `base_income * _tier_multiplier()`
