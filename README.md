@@ -1,9 +1,11 @@
 # Tycoon Template
 
 A small **tycoon game** you turn into your own. You own **stands** that sell
-things and make money at the **end of each day**. Click **End Day** to move
-forward. **Reach the goal amount of money by the deadline day to win** — miss it
-and you lose.
+things and make money at the **end of each day**. Click **End Day** to earn, then
+spend your money to **Buy** more stands or **Upgrade** the ones you own — growing
+your income while you race to **reach the goal amount of money by the deadline day
+to win.** Miss it and you lose. (Stands can also charge daily **upkeep** — rent —
+once you switch it on.)
 
 It ships on purpose looking **plain and unfinished, with unfair numbers**.
 Making it look good, naming things, and balancing the money so it's *fun-hard*
@@ -22,8 +24,9 @@ it a game.
 2. **Replace the placeholder art** (the gray boxes in `assets/`) with real
    pictures.
 3. **Build your shop.** Add stands and set each one's level and income.
-4. **Balance it.** Tune the starting money, the goal, and the deadline so a
-   player has to think — not too easy, not impossible.
+4. **Balance it.** Tune the starting money, the goal, the deadline, and your
+   **shop prices** (how much it costs to buy a stand, to upgrade, and the daily
+   upkeep) so a player has to think — not too easy, not impossible.
 5. **Write the mission text** the player sees when the game starts.
 
 ---
@@ -58,6 +61,9 @@ it makes sense. Click the node, look at the Inspector.
 | A stand's pictures | a `Stand` | **Level 1/2/3 Texture** |
 | The money you start with | `config/game_config.tres` | **Starting Money** |
 | The goal and the deadline | the `Level1` root (in `Level1.tscn`) | **Goal Money**, **Deadline Day** |
+| The price to **buy** another stand | the `Level1` root | **Buy Cost** |
+| The price to **upgrade** all stands at once | the `Level1` root | **Upgrade Cost** |
+| Daily **upkeep** per stand (`0` = off) | the `Level1` root | **Upkeep Per Stand** |
 | How a day passes (button vs timer) | `Managers/TimeManager` | **Time Mode**, **Seconds Per Day** |
 | The mission / message text | `UI/Message` | **Messages**, **Win/Lose Message** |
 | Show or hide the cheat button | the `HUD` root | **Show Debug Buttons** |
@@ -68,7 +74,12 @@ it makes sense. Click the node, look at the Inspector.
 
 **One thing to keep in sync yourself:** the mission text ("reach $500 by day 10")
 is just words you type into the `Message` node. If you change the **Goal Money**
-on the GoalManager, update that text too so it still tells the truth.
+on the `Level1` root, update that text too so it still tells the truth.
+
+> **Why are the prices on the `Level1` root?** Because they belong to *this level*.
+> When you make a second, harder level later, its food truck can charge more rent
+> and cost more to expand than the front lawn did — each level carries its own
+> numbers. (The Shop just *reads* whichever level is loaded; see `Shop.gd`.)
 
 ---
 
@@ -94,6 +105,7 @@ tycoon-template/
 ├─ autoload/             always-on systems, reachable anywhere by name
 │  ├─ Globals.gd          money, day, add_money(), end_day()
 │  ├─ SignalBus.gd        the "bulletin board" of signals
+│  ├─ Shop.gd             the ONE place money is spent: buy / upgrade / upkeep
 │  ├─ SaveManager.gd      save / load
 │  └─ AudioManager.gd     play sounds
 ├─ config/
@@ -111,7 +123,7 @@ tycoon-template/
 │  │  ├─ GoalManager.gd    decides win / lose
 │  │  └─ PlayLogger.gd     writes playlog.csv each day
 │  └─ ui/
-│     ├─ HUD.gd            money & day display + End Day button
+│     ├─ HUD.gd            money & day display + End Day / Buy / Upgrade buttons
 │     └─ MessageCanvas.gd  shows the mission / win / lose text
 └─ project.godot
 ```
@@ -134,7 +146,9 @@ the files in this order — each is short and commented:
    "day ended," earns money, and shows the picture for its level.
 3. **`scenes/ui/HUD.gd`** — listening to the bulletin board and updating the screen.
 4. **`scenes/managers/GoalManager.gd`** — the win/lose rule, in one tidy function.
-5. **`autoload/Globals.gd`** and the rest of the managers.
+5. **`autoload/Shop.gd`** — spending money: buy a stand, upgrade them all, charge
+   upkeep. Notice it holds no prices itself — it reads them off the current level.
+6. **`autoload/Globals.gd`** and the rest of the managers.
 
 Then try the **`CHALLENGES.md`** ladder — small coding tasks that get harder.
 
@@ -154,6 +168,8 @@ Then try the **`CHALLENGES.md`** ladder — small coding tasks that get harder.
 ## Before you share your game (playtest checklist)
 
 - [ ] It runs with **no red errors** in the Output panel.
+- [ ] **Buy** and **Upgrade** both work, and the prices feel fair (not free, not
+      hopeless). If you turned on **upkeep**, the game is still winnable.
 - [ ] You can actually **reach the goal** — but it takes some thought (not free,
       not impossible).
 - [ ] You **replaced the placeholder pictures** (no more gray boxes / Godot logo).

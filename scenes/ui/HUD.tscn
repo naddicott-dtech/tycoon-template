@@ -8,14 +8,15 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_kw0id")
+show_debug_buttons = false
 
 [node name="MoneyLabel" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 141.0
-offset_top = 20.0
-offset_right = 181.0
-offset_bottom = 43.0
+offset_left = 91.0
+offset_top = 46.0
+offset_right = 131.0
+offset_bottom = 69.0
 
 [node name="DayLabel" type="Label" parent="."]
 unique_name_in_owner = true
@@ -28,19 +29,37 @@ offset_bottom = 40.0
 [node name="AddMoneyButton" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 109.0
-offset_top = 110.0
-offset_right = 180.0
-offset_bottom = 141.0
+offset_left = 103.0
+offset_top = 195.0
+offset_right = 174.0
+offset_bottom = 226.0
 text = "Add $10"
 
 [node name="EndDayButton" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 104.0
-offset_top = 141.0
-offset_right = 175.0
-offset_bottom = 172.0
+offset_left = 98.0
+offset_top = 226.0
+offset_right = 169.0
+offset_bottom = 257.0
 text = "End Day"
+
+[node name="BuyButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 79.0
+offset_top = 102.0
+offset_right = 165.0
+offset_bottom = 133.0
+text = "Buy Stand"
+
+[node name="UpgradeButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 86.0
+offset_top = 139.0
+offset_right = 161.0
+offset_bottom = 170.0
+text = "Upgrade"
 
 [connection signal="pressed" from="AddMoneyButton" to="." method="_on_add_money_button_pressed"]

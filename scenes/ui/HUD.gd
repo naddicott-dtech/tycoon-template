@@ -30,6 +30,11 @@ func _ready():
 	# in code so it's wired the instant the scene loads — you never have to open
 	# the Node panel and connect a signal yourself.
 	%EndDayButton.pressed.connect(Globals.end_day)
+	# The shop buttons spend money to grow your business: buy another stand, or
+	# upgrade all the stands you own. Same idea as End Day — the button just calls
+	# a function by name (see Shop.gd for what each one does).
+	%BuyButton.pressed.connect(Shop.buy_stand)
+	%UpgradeButton.pressed.connect(Shop.upgrade_all)
 
 # A "handler" is just a function that runs in response to a signal. By Godot
 # convention these are named _on_<thing>. This one updates the money label.

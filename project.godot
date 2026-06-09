@@ -21,6 +21,7 @@ Globals="*res://autoload/Globals.gd"
 SignalBus="*res://autoload/SignalBus.gd"
 SaveManager="*res://autoload/SaveManager.gd"
 AudioManager="*res://autoload/AudioManager.gd"
+Shop="*res://autoload/Shop.gd"
 
 [rendering]
 

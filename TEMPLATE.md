@@ -5,14 +5,21 @@ For the friendly walkthrough see `README.md`; for coding tasks see `CHALLENGES.m
 
 ## What it is
 An idle/tycoon: **stands** earn money at the **end of each day**; the player
-clicks **End Day**; reaching **goal money** by the **deadline day** wins, else
-loses. Ships playable, ugly, and unbalanced on purpose.
+clicks **End Day**, and spends earnings via **Buy** / **Upgrade** buttons to grow
+income (optional per-day **upkeep** pushes back). Reaching **goal money** by the
+**deadline day** wins, else loses. Ships playable, ugly, and unbalanced on purpose.
 
 ## Core loop (who tells whom)
 `End Day button → Globals.end_day() → SignalBus.day_ended →`
+`  Shop charges upkeep (autoload, fires first): upkeep_per_stand × stand_count`
 `  each Stand earns income_for_day() → Globals.add_money() → SignalBus.money_changed → HUD`
 `  GoalManager reads current level's goal → evaluate() → SignalBus.game_over → MessageCanvas`
 `  PlayLogger appends a row to user://playlog.csv`
+
+## Invest loop (who tells whom)
+`Buy button → Shop.buy_stand() → reads Level.buy_cost → spends → instantiates Stand into Entities`
+`Upgrade button → Shop.upgrade_all() → reads Level.upgrade_cost → spends → Stand.upgrade() on every "stand"`
+`Shop holds NO numbers: reads them off the current_level; spends through Globals.add_money(-cost)`
 
 ## The duplicatable block
 `scenes/entities/Stand.tscn` — copy with Ctrl+D inside the level
@@ -28,6 +35,9 @@ to `day_ended` in `_ready()`. No signal hookup needed.
 | level_1/2/3_texture | Stand | Texture2D | picture per level |
 | goal_money | Level1 root (Level.gd) | int | money to win THIS level |
 | deadline_day | Level1 root (Level.gd) | int | win by end of this day |
+| buy_cost | Level1 root (Level.gd) | int | price to buy one more stand |
+| upgrade_cost | Level1 root (Level.gd) | int | price to upgrade ALL stands one tier |
+| upkeep_per_stand | Level1 root (Level.gd) | int | per-day rent per stand (default 0 = off) |
 | time_mode | Managers/TimeManager | enum MANUAL/REAL_TIME | button vs auto clock |
 | seconds_per_day | Managers/TimeManager | float | day length in REAL_TIME |
 | messages / win_message / lose_message | UI/Message | String[] / String | on-screen text |
@@ -39,21 +49,28 @@ Artist (`assets/` + the HUD/Message look) · Balance/Tuning (the knobs above +
 `playlog.csv`) · Level/Content (add/arrange stands) · Writer-light (Message text).
 
 ## File map
-`autoload/` Globals · SignalBus · SaveManager · AudioManager
+`autoload/` Globals · SignalBus · Shop · SaveManager · AudioManager
 `config/` GameConfig.gd + game_config.tres
 `assets/` stand_level_1/2/3.svg (placeholders)
 `scenes/` Main (holds WorldRoot/Level1) · levels/Level1 (Level.gd: per-level goal) · entities/Stand · managers/{TimeManager,GoalManager,PlayLogger} · ui/{HUD,MessageCanvas}
 
 ## Pure logic seams (for tests / autograder / AI checks)
 - `Stand.income_for_day()` → `base_income * _tier_multiplier()`
+- `Stand.upgrade()` → tier +1, capped at LEVEL_3 (drives both income and picture)
+- `Shop._upkeep_total(rate, count)` → `rate * count` (the gradeable upkeep seam)
 - `GoalManager.evaluate(money, day, goal, deadline)` → PLAYING/WON/LOST (win before lose; `day > deadline` loses)
 - `Globals.end_day()` → day +1, emits `day_ended`
 - `TimeManager.advance(delta)` → in REAL_TIME, rolls a day every `seconds_per_day`
 
+## Live-tree seams (integration-tested, not pure)
+- `Shop.buy_stand()` → spends `Level.buy_cost`, instantiates Stand into `Entities`, rows it right
+- `Shop.upgrade_all()` → spends `Level.upgrade_cost`, calls `upgrade()` on every `"stand"`
+- `Shop._on_day_ended()` → drains `upkeep_per_stand × stand_count` (see `ShopTest.gd`)
+
 ## Common student tweaks
 Rename items · swap `assets/` art · Ctrl+D more stands · raise a stand's Tier ·
-set goal/deadline on GoalManager · edit the mission in the Message node · flip
-TimeManager to REAL_TIME for an idle feel.
+set goal/deadline AND buy/upgrade/upkeep prices on the `Level1` root · edit the
+mission in the Message node · flip TimeManager to REAL_TIME for an idle feel.
 
 ## Coordination point (not automatic)
 The mission text in `UI/Message.messages` is plain words; keep it consistent with

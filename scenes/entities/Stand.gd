@@ -28,10 +28,22 @@ func _ready() -> void:
 	# Subscribe to the bulletin board: when a day ends, earn money. Because each
 	# Stand signs itself up here, a duplicated Stand just works — no wiring.
 	SignalBus.day_ended.connect(_on_day_ended)
+	# Join the "stand" group so the Shop can find and count every stand at once
+	# (that's how Upgrade All reaches all of them, and how upkeep is totaled).
+	add_to_group("stand")
 	_show_level_picture()
 
 func _on_day_ended(_day_number: int) -> void:
 	Globals.add_money(income_for_day())
+
+# Raise this stand one level (LEVEL_1 → LEVEL_2 → LEVEL_3), and stop at the top.
+# The Shop calls this when the player pays to upgrade. We only change the tier:
+# earning more and showing the new picture both follow from it automatically
+# (see the two "match tier" blocks below) — so there's nothing else to keep in sync.
+func upgrade() -> void:
+	if tier < Tier.LEVEL_3:
+		tier = (tier + 1) as Tier
+	_show_level_picture()
 
 # How much this stand earns in one day. It's kept as its own little function with
 # no outside connections, which makes it easy to read AND easy to test.
