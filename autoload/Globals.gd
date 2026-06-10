@@ -23,7 +23,8 @@ var day := 1
 
 # These MIRROR the global config values. They start at sensible defaults and get
 # overwritten by the config file (if it exists) when the game starts. (Per-rule
-# knobs like the goal live on their own nodes, e.g. GoalManager — not here.)
+# knobs like the goal live on their own nodes — the goal lives on the Level, not
+# here.)
 var starting_money := 100
 var start_day := 1
 
@@ -35,10 +36,17 @@ func _ready() -> void:
 		config = load(CONFIG_PATH)
 		starting_money = config.starting_money
 		start_day = config.start_day
-	# Copy the starting values into the live values.
+	# Then start a fresh game. Startup and "Play Again" share this one function,
+	# so what "a fresh game" means lives in exactly one place.
+	reset()
+
+# Put the LIVE values back to their starting values, and announce the money so
+# the HUD updates. Runs at startup (see _ready above), and again when the player
+# presses "Play Again" on the Game-Over screen — this script is an autoload, so
+# it SURVIVES a scene reload and has to reset itself.
+func reset() -> void:
 	money = starting_money
 	day = start_day
-	# Announce the starting money so the HUD can show it right away.
 	# (We "emit" on the SignalBus — see SignalBus.gd for how that works.)
 	SignalBus.money_changed.emit(money)
 

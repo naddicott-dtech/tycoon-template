@@ -4,8 +4,8 @@
 # the end of each day (after the stands have earned their money):
 #   - reached the goal money?            -> WIN
 #   - run past the deadline day, short?  -> LOSE
-# It posts the result on the SignalBus ("game_over"), and the MessageCanvas shows
-# the matching text. The goal and deadline belong to the LEVEL (each level sets
+# It posts the result on the SignalBus ("game_over"), and the GameOverScreen
+# shows the result and stops the game. The goal and deadline belong to the LEVEL (each level sets
 # its own — see Level.gd), so this manager asks the current level for them. That
 # means it holds no numbers of its own and keeps working no matter which level is
 # loaded.

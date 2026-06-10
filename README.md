@@ -84,7 +84,8 @@ it makes sense. Click the node, look at the Inspector.
 | The price to **upgrade** all stands at once | the `Level1` root | **Upgrade Cost** |
 | Daily **upkeep** per stand (`0` = off) | the `Level1` root | **Upkeep Per Stand** |
 | How a day passes (button vs timer) | `Managers/TimeManager` | **Time Mode**, **Seconds Per Day** |
-| The mission / message text | `UI/Message` | **Messages**, **Win/Lose Message** |
+| The mission / message text | `UI/Message` | **Messages** |
+| The end-of-game text | `UI/GameOverScreen` | **Win Message**, **Lose Message** |
 | Show or hide the cheat button | the `HUD` root | **Show Debug Buttons** |
 
 > Only the **Starting Money / Start Day** live in the `game_config.tres` file,
@@ -144,7 +145,8 @@ tycoon-template/
 │  │  └─ PlayLogger.gd     writes playlog.csv each day
 │  └─ ui/
 │     ├─ HUD.gd            money & day display + End Day / Buy / Upgrade buttons
-│     └─ MessageCanvas.gd  shows the mission / win / lose text
+│     ├─ MessageCanvas.gd  shows the mission text at the start
+│     └─ GameOverScreen.gd the end screen: win/lose text, pauses the game, Play Again
 └─ project.godot
 ```
 
@@ -192,6 +194,9 @@ Then try the **`CHALLENGES.md`** ladder — small coding tasks that get harder.
       hopeless). If you turned on **upkeep**, the game is still winnable.
 - [ ] You can actually **reach the goal** — but it takes some thought (not free,
       not impossible).
+- [ ] Lose on purpose once: the **Game-Over screen** covers the game, the buttons
+      under it stop working, and **Play Again** starts a fresh run (day 1,
+      starting money).
 - [ ] You **replaced the placeholder pictures** (no more gray boxes / Godot logo).
 - [ ] You **renamed** "Consumable Item A" and gave your stands real names.
 - [ ] The **mission text matches** your real goal and deadline.

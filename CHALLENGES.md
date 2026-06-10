@@ -115,6 +115,25 @@ own kind of stand.
 *Touches: `Shop._make_stand()` — you're putting your own rule in front of a
 built-in one. The empty-slot fallback is what keeps it safe.*
 
+## Rung 10 — Keep playing after you win (code + editor)
+**Goal:** after a win, let the player wave off the Game-Over screen and keep
+running their shop, sandbox-style.
+1. In `Main.tscn`, add a **Button** under `UI/GameOverScreen` next to
+   `PlayAgainButton`. Name it `KeepPlayingButton`, set its text, and right-click
+   it → **% Access as Unique Name**.
+2. In `scenes/ui/GameOverScreen.gd`'s `_ready()`, wire it up:
+   `%KeepPlayingButton.pressed.connect(_on_keep_playing)`
+3. Add the handler — three lines:
+   ```gdscript
+   func _on_keep_playing() -> void:
+   	get_tree().paused = false
+   	visible = false
+   ```
+No reset, no reload — the game just continues where it ended.
+*Touches: the pause pattern. Your new button works while everything else is
+frozen ONLY because the screen's **Process > Mode** is `Always` — read the
+comment at the top of `GameOverScreen.gd` before you start.*
+
 ---
 
 ## Going further (open-ended — no single right answer)

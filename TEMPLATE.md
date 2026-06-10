@@ -13,7 +13,8 @@ income (optional per-day **upkeep** pushes back). Reaching **goal money** by the
 `End Day button → Globals.end_day() → SignalBus.day_ended →`
 `  Shop charges upkeep (autoload, fires first): upkeep_per_stand × stand_count`
 `  each Stand earns income_for_day() → Globals.add_money() → SignalBus.money_changed → HUD`
-`  GoalManager reads current level's goal → evaluate() → SignalBus.game_over → MessageCanvas`
+`  GoalManager reads current level's goal → evaluate() → SignalBus.game_over → GameOverScreen`
+`  (GameOverScreen shows the result + PAUSES the tree = input lockout; Play Again → Globals.reset() + scene reload)`
 `  PlayLogger appends a row to user://playlog.csv`
 
 ## Invest loop (who tells whom)
@@ -41,19 +42,21 @@ to `day_ended` in `_ready()`. No signal hookup needed.
 | upkeep_per_stand | Level1 root (Level.gd) | int | per-day rent per stand (default 0 = off) |
 | time_mode | Managers/TimeManager | enum MANUAL/REAL_TIME | button vs auto clock |
 | seconds_per_day | Managers/TimeManager | float | day length in REAL_TIME |
-| messages / win_message / lose_message | UI/Message | String[] / String | on-screen text |
+| messages | UI/Message | String[] | mission / intro text |
+| win_message / lose_message | UI/GameOverScreen | String | end-screen text |
 | show_debug_buttons | HUD root | bool | show the +money cheat button |
 | starting_money / start_day | config/game_config.tres | int | new-game globals (Globals-owned) |
 
 ## Role seams
 Artist (`assets/` + the HUD/Message look) · Balance/Tuning (the knobs above +
-`playlog.csv`) · Level/Content (add/arrange stands) · Writer-light (Message text).
+`playlog.csv`) · Level/Content (add/arrange stands) · Writer-light (Message +
+end-screen text).
 
 ## File map
 `autoload/` Globals · SignalBus · Shop · SaveManager · AudioManager
 `config/` GameConfig.gd + game_config.tres
 `assets/` stand_level_1/2/3.svg (placeholders)
-`scenes/` Main (holds WorldRoot/Level1) · levels/Level1 (Level.gd: per-level goal) · entities/Stand · managers/{TimeManager,GoalManager,PlayLogger} · ui/{HUD,MessageCanvas}
+`scenes/` Main (holds WorldRoot/Level1) · levels/Level1 (Level.gd: per-level goal) · entities/Stand · managers/{TimeManager,GoalManager,PlayLogger} · ui/{HUD,MessageCanvas,GameOverScreen}
 
 ## Pure logic seams (for tests / autograder / AI checks)
 - `Stand.income_for_day()` → `base_income * _tier_multiplier()`
@@ -61,6 +64,7 @@ Artist (`assets/` + the HUD/Message look) · Balance/Tuning (the knobs above +
 - `Shop._upkeep_total(rate, count)` → `rate * count` (the gradeable upkeep seam)
 - `GoalManager.evaluate(money, day, goal, deadline)` → PLAYING/WON/LOST (win before lose; `day > deadline` loses)
 - `Globals.end_day()` → day +1, emits `day_ended`
+- `Globals.reset()` → money/day back to starting values, emits `money_changed` (startup AND Play Again share it)
 - `TimeManager.advance(delta)` → in REAL_TIME, rolls a day every `seconds_per_day`
 
 ## Live-tree seams (integration-tested, not pure)
@@ -71,11 +75,13 @@ Artist (`assets/` + the HUD/Message look) · Balance/Tuning (the knobs above +
 ## Common student tweaks
 Rename items · swap `assets/` art · Ctrl+D more stands · raise a stand's Tier ·
 set goal/deadline AND buy/upgrade/upkeep prices on the `Level1` root · edit the
-mission in the Message node · flip TimeManager to REAL_TIME for an idle feel.
+mission in the Message node and the end text on the GameOverScreen · flip
+TimeManager to REAL_TIME for an idle feel · drag a stand to the top of Entities
+to choose what Buy copies.
 
 ## Coordination point (not automatic)
-The mission text in `UI/Message.messages` is plain words; keep it consistent with
-`GoalManager.goal_money` / `deadline_day` by hand.
+The mission text in `UI/Message.messages` is plain words; keep it consistent
+with the Level's `goal_money` / `deadline_day` by hand.
 
 ## Platform notes
 Godot 4.5, GL Compatibility, web-editor/Chromebook target. Pure GDScript; no C#,
