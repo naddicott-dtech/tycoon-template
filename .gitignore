@@ -1,3 +1,10 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Dev-only test harness (symlinked in by scripts/link-dev.sh) and its generated
+# reports — never ship to students. If a template ever vendors a REAL addon,
+# narrow the /addons line to /addons/gdUnit4 at that point.
+/test
+/addons
+/reports/

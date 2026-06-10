@@ -5,10 +5,10 @@
 # single node — the money you start with and the first day's number.
 #
 # MOST balance knobs do NOT live here. They live on the node that owns them: a
-# stand's income is on the Stand, the goal is on the GoalManager, the day length
-# is on the TimeManager. You tune those right on the node, in the Inspector, in
-# context. This file is only for values that have no node to live on, because
-# they belong to an autoload (Globals).
+# stand's income is on the Stand, the goal and prices are on the Level, the day
+# length is on the TimeManager. You tune those right on the node, in the
+# Inspector, in context. This file is only for values that have no node to live
+# on, because they belong to an autoload (Globals).
 #
 # To edit these: double-click "config/game_config.tres" in the FileSystem dock.
 class_name GameConfig

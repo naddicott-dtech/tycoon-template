@@ -17,7 +17,8 @@ income (optional per-day **upkeep** pushes back). Reaching **goal money** by the
 `  PlayLogger appends a row to user://playlog.csv`
 
 ## Invest loop (who tells whom)
-`Buy button → Shop.buy_stand() → reads Level.buy_cost → spends → instantiates Stand into Entities`
+`Buy button → Shop.buy_stand() → reads Level.buy_cost → spends → CLONES the top stand in the tree into Entities`
+`  (duplicate() carries every @export — name, income, current tier; no stands → falls back to the Stand prefab)`
 `Upgrade button → Shop.upgrade_all() → reads Level.upgrade_cost → spends → Stand.upgrade() on every "stand"`
 `Shop holds NO numbers: reads them off the current_level; spends through Globals.add_money(-cost)`
 
@@ -63,7 +64,7 @@ Artist (`assets/` + the HUD/Message look) · Balance/Tuning (the knobs above +
 - `TimeManager.advance(delta)` → in REAL_TIME, rolls a day every `seconds_per_day`
 
 ## Live-tree seams (integration-tested, not pure)
-- `Shop.buy_stand()` → spends `Level.buy_cost`, instantiates Stand into `Entities`, rows it right
+- `Shop.buy_stand()` → spends `Level.buy_cost`, clones the TOP `"stand"` (tree order — test-pinned) into `Entities`, rows it right
 - `Shop.upgrade_all()` → spends `Level.upgrade_cost`, calls `upgrade()` on every `"stand"`
 - `Shop._on_day_ended()` → drains `upkeep_per_stand × stand_count` (see `ShopTest.gd`)
 

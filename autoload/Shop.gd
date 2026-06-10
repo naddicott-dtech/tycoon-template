@@ -10,8 +10,9 @@
 # "End Day" button calls Globals.end_day() — so the money trail is easy to follow.
 extends Node
 
-# The prefab a "Buy" creates, and how far apart auto-placed stands sit. The row
-# just marches to the right — tidier layouts (a grid, wrapping rows) are a challenge.
+# The fallback prefab "Buy" creates when you own no stands to copy, and how far
+# apart auto-placed stands sit. The row just marches to the right — tidier
+# layouts (a grid, wrapping rows) are a challenge.
 const STAND_SCENE := preload("res://scenes/entities/Stand.tscn")
 const STAND_SPACING := 128.0   # pixels between bought stands
 
@@ -28,7 +29,7 @@ func buy_stand() -> void:
 	if Globals.money < level.buy_cost:
 		return   # not enough money — do nothing
 	Globals.add_money(-level.buy_cost)   # spend (a negative amount takes money away)
-	var stand := STAND_SCENE.instantiate()
+	var stand := _make_stand()
 	stand.position = _next_stand_position()
 	# Drop it next to the other stands. Levels keep their stands under "Entities";
 	# if that node isn't there, fall back to the level root so a buy still works.
@@ -37,6 +38,19 @@ func buy_stand() -> void:
 	if entities != null:
 		parent = entities
 	parent.add_child(stand)
+
+# "Buy" makes another COPY of a stand you already have — the same idea as
+# pressing Ctrl+D on a stand in the editor, just while the game is running. So a
+# bought stand sells and earns exactly what your stand does: every value you set
+# in the Inspector (the name, the income, even the tier) rides along, because
+# duplicate() copies the @export values. The TOP stand in your level is the one
+# that gets copied — drag a different stand to the top to change what Buy builds.
+# (No stands at all? Fall back to a plain default stand so Buy still works.)
+func _make_stand() -> Node2D:
+	var stands := get_tree().get_nodes_in_group("stand")
+	if stands.is_empty():
+		return STAND_SCENE.instantiate()
+	return stands[0].duplicate()
 
 # Where the next bought stand goes: one step to the right of the stand you placed
 # last, so they grow in a tidy row out from your existing stands — NOT on top of the

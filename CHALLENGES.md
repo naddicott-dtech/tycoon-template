@@ -83,6 +83,38 @@ Now spending (or rent) past zero ends the game.
 *Touches: `evaluate()` — the pure win/lose rule, the easiest thing to grade
 automatically.*
 
+## Rung 8 — Grey out what you can't afford (code, UI polish)
+**Goal:** the **Buy** and **Upgrade** buttons should *look* dead when you're short
+on money, instead of silently doing nothing.
+Buttons have a built-in `disabled` property. The HUD already hears every money
+change — in `scenes/ui/HUD.gd`, add to the end of `_on_money_changed()`:
+```gdscript
+	var level = get_tree().get_first_node_in_group("current_level")
+	if level:
+		%BuyButton.disabled = new_money < level.buy_cost
+		%UpgradeButton.disabled = new_money < level.upgrade_cost
+```
+*Touches: `HUD._on_money_changed()`. Five lines: drive the UI from a signal you
+already have. A big quality-of-life win for your players.*
+
+## Rung 9 — Choose what Buy builds (code + a new knob)
+**Goal:** Buy normally copies your **top** stand. Give the *level* a knob that
+says exactly which stand scene to build instead.
+1. In `scenes/levels/Level.gd` add: `@export var stand_to_buy: PackedScene`
+2. In `autoload/Shop.gd`'s `_make_stand()`, add at the very top:
+   ```gdscript
+   var level = _current_level()
+   if level != null and level.stand_to_buy != null:
+       return level.stand_to_buy.instantiate()
+   ```
+3. Make a scene to sell: select your themed `Stand` in the tree, right-click →
+   **Save Branch as Scene**. Then click the `Level1` root and drag your new
+   scene into the **Stand To Buy** slot.
+Leave the slot empty and Buy behaves like before. Now each level can sell its
+own kind of stand.
+*Touches: `Shop._make_stand()` — you're putting your own rule in front of a
+built-in one. The empty-slot fallback is what keeps it safe.*
+
 ---
 
 ## Going further (open-ended — no single right answer)

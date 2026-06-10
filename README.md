@@ -7,8 +7,11 @@ your income while you race to **reach the goal amount of money by the deadline d
 to win.** Miss it and you lose. (Stands can also charge daily **upkeep** — rent —
 once you switch it on.)
 
-It ships on purpose looking **plain and unfinished, with unfair numbers**.
-Making it look good, naming things, and balancing the money so it's *fun-hard*
+It ships on purpose looking **plain and unfinished — and the numbers aren't just
+unfair, they're mathematically impossible.** With the shipped starting money,
+income, and prices, *no* strategy reaches the goal by the deadline. Don't take
+our word for it: do the math (or play a run and read `playlog.csv`) and prove
+it. Then make it look good, name things, and re-balance it so it's *fun-hard*
 instead of impossible — **that's your job.** The machine already works; you make
 it a game.
 
@@ -45,6 +48,22 @@ touch.) **The duplicatable block is the `Stand`.** To add another money-maker:
 3. With the copy selected, change its values in the Inspector (below).
 
 Each stand wires itself up on its own — you never connect anything.
+
+**The Buy button does the same thing while the game runs:** it makes a copy of
+the **top stand** in your level — Ctrl+D at game time. So theme and tune your
+stand, and every stand you buy matches it. Two details worth knowing:
+- A bought stand copies the original's **current level** too. Upgrade early,
+  and every later buy is born upgraded. Is that fair? Your call, balance designer.
+- Want Buy to build a *different* stand? Drag that stand to the **top** of
+  `Entities` — the top one is always the model that gets copied.
+
+> **Two editor gotchas that look like bugs (they aren't):**
+> - A number box doesn't always select its text when you click it. If your
+>   typing seems ignored: click the box, type the number, press **Enter**, then
+>   look again to make sure it took.
+> - **Ctrl/Cmd+A** pressed outside a text field opens the **Add Node** dialog.
+>   If a mystery node shows up in your scene, that's how it got there —
+>   Ctrl/Cmd+Z and carry on.
 
 ---
 
@@ -91,7 +110,8 @@ This template is built so a team can split the work:
   HUD and message box (fonts, colors, a Theme). All drag-and-drop, no code.
 - **Balance / Tuning designer** — set the incomes, the goal, the deadline, the
   starting money. Play, and read `playlog.csv` (a spreadsheet of money per day)
-  to see how it went.
+  to see how it went. (On a computer the file lands in Godot's user-data folder:
+  **Project > Open User Data Folder** — it's saved as `user://playlog.csv`.)
 - **Level / Content designer** — add and arrange stands; decide what the shop is.
 - **Writer (light)** — the mission and message text. (For a real branching story,
   that's a different template.)
@@ -177,4 +197,5 @@ Then try the **`CHALLENGES.md`** ladder — small coding tasks that get harder.
 - [ ] The **mission text matches** your real goal and deadline.
 - [ ] You turned **Show Debug Buttons off** on the HUD for the final version.
 - [ ] You saved with **Project > Tools > Download Project Source** (the web editor
-      forgets your work otherwise — do this often!).
+      forgets your work otherwise — do this often!). *That menu item only exists
+      in the web editor; on a desktop install your project saves to disk normally.*
