@@ -10,7 +10,8 @@ once you switch it on.)
 It ships on purpose looking **plain and unfinished — and the numbers aren't just
 unfair, they're mathematically impossible.** With the shipped starting money,
 income, and prices, *no* strategy reaches the goal by the deadline. Don't take
-our word for it: do the math (or play a run and read `playlog.csv`) and prove
+our word for it: do the math (or play a run and watch the day-by-day money log
+in the **Output panel** at the bottom) and prove
 it. Then make it look good, name things, and re-balance it so it's *fun-hard*
 instead of impossible — **that's your job.** The machine already works; you make
 it a game.
@@ -87,6 +88,7 @@ it makes sense. Click the node, look at the Inspector.
 | The mission / message text | `UI/Message` | **Messages** |
 | The end-of-game text | `UI/GameOverScreen` | **Win Message**, **Lose Message** |
 | Show or hide the cheat button | the `HUD` root | **Show Debug Buttons** |
+| How much the cheat button adds | the `HUD` root | **Debug Add Amount** |
 
 > Only the **Starting Money / Start Day** live in the `game_config.tres` file,
 > because they belong to `Globals` (an always-on script with no node to click).
@@ -110,9 +112,11 @@ This template is built so a team can split the work:
 - **Artist** — replace the placeholder pictures in `assets/`, and restyle the
   HUD and message box (fonts, colors, a Theme). All drag-and-drop, no code.
 - **Balance / Tuning designer** — set the incomes, the goal, the deadline, the
-  starting money. Play, and read `playlog.csv` (a spreadsheet of money per day)
-  to see how it went. (On a computer the file lands in Godot's user-data folder:
-  **Project > Open User Data Folder** — it's saved as `user://playlog.csv`.)
+  starting money. Play, and read how it went: every day prints a `playlog` line
+  in the **Output panel**, and the same rows are saved as `playlog.csv`, a
+  spreadsheet of money per day. (On a desktop computer the file is in Godot's
+  user-data folder: **Project > Open User Data Folder**. In the web editor,
+  stick to the Output panel.)
 - **Level / Content designer** — add and arrange stands; decide what the shop is.
 - **Writer (light)** — the mission and message text. (For a real branching story,
   that's a different template.)

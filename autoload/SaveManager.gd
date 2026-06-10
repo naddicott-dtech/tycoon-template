@@ -52,6 +52,10 @@ func apply_snapshot(snapshot: Dictionary) -> void:
 			SignalBus.money_changed.emit(Globals.money)   # refresh the HUD
 		if savedGlobals.has("day"):
 			Globals.day = int(savedGlobals["day"])
+			# TODO(Neal): this fakes a real gameplay event just to refresh the HUD's
+			# day label — every stand "earns" a free day and rent is charged when it
+			# fires. Harmless while nothing in the UI calls load, but it needs a
+			# proper refresh path (its own signal?) before a Load button exists.
 			SignalBus.day_ended.emit(Globals.day)         # refresh the HUD
 	if snapshot.has("savables"):
 		for entry in snapshot["savables"]:

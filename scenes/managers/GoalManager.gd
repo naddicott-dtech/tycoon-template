@@ -1,7 +1,10 @@
 # GoalManager.gd
 #
-# Decides whether the player has WON or LOST, and announces it once. It checks at
-# the end of each day (after the stands have earned their money):
+# Decides whether the player has WON or LOST, and announces it once. It listens
+# for "day_settled" — NOT "day_ended" — because day_settled fires only after
+# every stand has earned and rent is paid, so the check always sees the day's
+# FINAL money. (Stands you buy mid-game sign up for day_ended later than this
+# manager did; checking on day_ended would miss their income.) Each settled day:
 #   - reached the goal money?            -> WIN
 #   - run past the deadline day, short?  -> LOSE
 # It posts the result on the SignalBus ("game_over"), and the GameOverScreen
@@ -17,9 +20,9 @@ enum Result { PLAYING, WON, LOST }
 var _resolved := false
 
 func _ready() -> void:
-	SignalBus.day_ended.connect(_on_day_ended)
+	SignalBus.day_settled.connect(_on_day_settled)
 
-func _on_day_ended(_day_number: int) -> void:
+func _on_day_settled(_day_number: int) -> void:
 	if _resolved:
 		return
 	# Ask the current level for its goal. (The level put itself in the

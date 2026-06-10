@@ -62,3 +62,7 @@ func add_money(amount: int) -> void:
 func end_day() -> void:
 	day += 1
 	SignalBus.day_ended.emit(day)
+	# emit() doesn't return until EVERY day_ended listener has run — rent paid,
+	# every stand's income in. Only then do we announce the day is settled, so
+	# whoever checks the total (GoalManager, PlayLogger) sees the real number.
+	SignalBus.day_settled.emit(day)

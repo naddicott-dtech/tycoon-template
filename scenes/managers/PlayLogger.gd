@@ -1,23 +1,28 @@
 # PlayLogger.gd
 #
-# Writes one row to a CSV file every time a day ends, so you can open the file in
-# a spreadsheet and SEE how the game played out — money per day, day by day. That
-# is how a designer "reads" their game to balance it. (A spreadsheet is a kind of
-# game too.)
+# Records how the game played out — money per day, day by day. That is how a
+# designer "reads" their game to balance it. Each settled day goes two places:
+#   1. the OUTPUT PANEL (print) — read it right after you play, anywhere;
+#   2. a CSV file you can open in a spreadsheet. (A spreadsheet is a kind of
+#      game too.)
 #
 # The file is "user://playlog.csv". "user://" is a private per-player folder Godot
 # manages. In the web editor it lives inside the browser, so pulling the file out
-# to open in a spreadsheet is a "later, on a bigger computer" activity.
+# to open in a spreadsheet is a "later, on a bigger computer" activity — the
+# Output panel is the everywhere version.
 extends Node
 
 const LOG_PATH := "user://playlog.csv"
 
 func _ready() -> void:
 	_start_new_log()
-	SignalBus.day_ended.connect(_on_day_ended)
+	# day_settled (not day_ended) so the row shows the day's FINAL money — after
+	# every stand, even one bought mid-game, has earned. See SignalBus.gd.
+	SignalBus.day_settled.connect(_on_day_settled)
 
-func _on_day_ended(day_number: int) -> void:
+func _on_day_settled(day_number: int) -> void:
 	# One row per day: the day number and the money at the end of that day.
+	print("playlog — day ", day_number, ": $", Globals.money)
 	_append_row(str(day_number) + "," + str(Globals.money))
 
 # Start a fresh file each run, with a header row naming the columns.

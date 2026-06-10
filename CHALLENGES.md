@@ -7,6 +7,8 @@ to check yours.
 
 > Tip: after a code change, press **Play**. Godot 4.5 prints errors loudly in the
 > Output panel at the bottom — read them; they usually tell you the line.
+> One more: GDScript indents with **Tab**. If a pasted block complains about
+> "space character for indentation", retype its indentation with the Tab key.
 
 ---
 
@@ -102,11 +104,11 @@ already have. A big quality-of-life win for your players.*
 says exactly which stand scene to build instead.
 1. In `scenes/levels/Level.gd` add: `@export var stand_to_buy: PackedScene`
 2. In `autoload/Shop.gd`'s `_make_stand()`, add at the very top:
-   ```gdscript
-   var level = _current_level()
-   if level != null and level.stand_to_buy != null:
-       return level.stand_to_buy.instantiate()
-   ```
+```gdscript
+	var level = _current_level()
+	if level != null and level.stand_to_buy != null:
+		return level.stand_to_buy.instantiate()
+```
 3. Make a scene to sell: select your themed `Stand` in the tree, right-click →
    **Save Branch as Scene**. Then click the `Level1` root and drag your new
    scene into the **Stand To Buy** slot.
@@ -130,6 +132,9 @@ running their shop, sandbox-style.
    	visible = false
    ```
 No reset, no reload — the game just continues where it ended.
+Heads-up: your button shows after a **loss** too — fine for a sandbox. Want it
+win-only? Save `did_win` into a variable in `_on_game_over` and hide the button
+when it's false. That's the stretch version.
 *Touches: the pause pattern. Your new button works while everything else is
 frozen ONLY because the screen's **Process > Mode** is `Always` — read the
 comment at the top of `GameOverScreen.gd` before you start.*

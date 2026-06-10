@@ -13,9 +13,10 @@ income (optional per-day **upkeep** pushes back). Reaching **goal money** by the
 `End Day button → Globals.end_day() → SignalBus.day_ended →`
 `  Shop charges upkeep (autoload, fires first): upkeep_per_stand × stand_count`
 `  each Stand earns income_for_day() → Globals.add_money() → SignalBus.money_changed → HUD`
+`then SignalBus.day_settled (fires after ALL day_ended handlers → money is FINAL; bought stands connect late, so final-total listeners must NOT ride day_ended) →`
 `  GoalManager reads current level's goal → evaluate() → SignalBus.game_over → GameOverScreen`
 `  (GameOverScreen shows the result + PAUSES the tree = input lockout; Play Again → Globals.reset() + scene reload)`
-`  PlayLogger appends a row to user://playlog.csv`
+`  PlayLogger prints the day's row to the Output panel + appends it to user://playlog.csv`
 
 ## Invest loop (who tells whom)
 `Buy button → Shop.buy_stand() → reads Level.buy_cost → spends → CLONES the top stand in the tree into Entities`
@@ -45,6 +46,7 @@ to `day_ended` in `_ready()`. No signal hookup needed.
 | messages | UI/Message | String[] | mission / intro text |
 | win_message / lose_message | UI/GameOverScreen | String | end-screen text |
 | show_debug_buttons | HUD root | bool | show the +money cheat button |
+| debug_add_amount | HUD root | int | how much the cheat button adds |
 | starting_money / start_day | config/game_config.tres | int | new-game globals (Globals-owned) |
 
 ## Role seams
@@ -63,7 +65,7 @@ end-screen text).
 - `Stand.upgrade()` → tier +1, capped at LEVEL_3 (drives both income and picture)
 - `Shop._upkeep_total(rate, count)` → `rate * count` (the gradeable upkeep seam)
 - `GoalManager.evaluate(money, day, goal, deadline)` → PLAYING/WON/LOST (win before lose; `day > deadline` loses)
-- `Globals.end_day()` → day +1, emits `day_ended`
+- `Globals.end_day()` → day +1, emits `day_ended`, then `day_settled` once all earnings are in
 - `Globals.reset()` → money/day back to starting values, emits `money_changed` (startup AND Play Again share it)
 - `TimeManager.advance(delta)` → in REAL_TIME, rolls a day every `seconds_per_day`
 

@@ -57,6 +57,10 @@ the game *possible but not easy*.
 - [ ] Replace at least one placeholder picture: click a stand, and in the
       Inspector drop a real image into **Level 1 Texture**. (The `assets/`
       folder shows what's there now.)
+- [ ] Making art with an AI image tool? Ask it for a **transparent background**
+      (or one solid color that matches your level) — otherwise your stand ships
+      inside a white box. And getting the picture out of the chat and into the
+      web editor is its own little battle; ask your teacher to demo it once.
 
 **Balance pass — the real design work.**
 

@@ -17,8 +17,8 @@ extends Node2D
 # The shopping prices for THIS level. They live here (not in the Shop) so a later,
 # harder level — say a food truck — can charge more than the front lawn does.
 @export var buy_cost: int = 100        # cost to buy one more stand
-# Starts OFF (0). Raise it to make daily rent a real pressure on the player.
 @export var upgrade_cost: int = 150    # cost to upgrade ALL your stands one level
+# Starts OFF (0). Raise it to make daily rent a real pressure on the player.
 @export var upkeep_per_stand: int = 0  # money each stand costs you per day
 
 func _ready() -> void:

@@ -25,7 +25,13 @@ extends Node
 signal money_changed(new_value)   # posted whenever the player's money changes
 
 @warning_ignore("UNUSED_SIGNAL")
-signal day_ended(day_number)      # posted when a new day begins
+signal day_ended(day_number)      # posted when a day ends: rent is charged and stands earn
+
+# Posted right AFTER day_ended, once every listener above has finished — so the
+# day's money is FINAL. Listen to this one when you need the finished total
+# (the win/lose check and the play log do), not the money mid-change.
+@warning_ignore("UNUSED_SIGNAL")
+signal day_settled(day_number)
 
 @warning_ignore("UNUSED_SIGNAL")
 signal tick(delta_time)           # posted every single frame (see TimeManager)
