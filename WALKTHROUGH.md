@@ -10,6 +10,38 @@ what to do next.
 
 ---
 
+## Part 0 — The map (where everything lives)
+
+The editor is five areas. Every instruction in this walkthrough names one of them.
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│  Scene  Project  Debug ...                            ▶ PLAY     │
+├───────────────┬─────────────────────────────┬────────────────────┤
+│ SCENE dock    │                             │ INSPECTOR          │
+│               │         VIEWPORT            │                    │
+│ the tree of   │                             │ click a node on    │
+│ nodes in the  │   your game, laid out —     │ the left, and its  │
+│ open scene —  │   drag things around here   │ settings appear    │
+│ you CLICK     │                             │ here — this is     │
+│ things here   │                             │ where you CHANGE   │
+├───────────────┤                             │ VALUES             │
+│ FILESYSTEM    │                             │                    │
+│ dock          ├─────────────────────────────┴────────────────────┤
+│ every file in │ OUTPUT                                            │
+│ the project — │ errors (red) and the playlog lines appear here — │
+│ DOUBLE-CLICK  │ when something seems broken, read this first      │
+│ a .tscn to    │                                                   │
+│ open it       │                                                   │
+└───────────────┴───────────────────────────────────────────────────┘
+```
+
+The loop you'll repeat all hour: **double-click a scene** (FileSystem) →
+**click a node** (Scene dock) → **change a value** (Inspector) → **▶ Play** →
+**read the Output** if something's off.
+
+---
+
 ## Part 1 — Play it (5 minutes)
 
 - [ ] Press **Play** (the ▶ button, top right).
