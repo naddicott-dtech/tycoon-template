@@ -8,11 +8,11 @@
 [node name="Stand" type="Sprite2D"]
 texture = ExtResource("3_qhtib")
 script = ExtResource("2_2rcrt")
-item_name = "Consumable Placeholder"
 level_1_texture = ExtResource("3_qhtib")
 level_2_texture = ExtResource("4_3yig3")
 level_3_texture = ExtResource("5_v6v0d")
 
 [node name="StandLabel" type="Label" parent="."]
+offset_top = 70.0
 offset_right = 40.0
-offset_bottom = 23.0
+offset_bottom = 93.0
