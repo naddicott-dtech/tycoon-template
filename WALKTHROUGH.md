@@ -39,8 +39,8 @@ the game *possible but not easy*.
 **Theme it** — decide what your shop sells.
 
 - [ ] Open `scenes/levels/Level1.tscn`. Click the `Stand` under `Entities`.
-- [ ] In the Inspector, change **Item Name** from "Consumable Item A" to your
-      real product.
+- [ ] In the Inspector, change **Item Name** from "Consumable Placeholder" to
+      your real product. Press Play — the stand's name tag shows it.
 - [ ] Open `UI/Message` (it's in `Main.tscn`) and rewrite the mission text in
       your own words.
 

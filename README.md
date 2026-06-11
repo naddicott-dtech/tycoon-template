@@ -23,8 +23,9 @@ it a game.
 
 ## Your Mission
 
-1. **Give it a theme.** Right now a stand sells "Consumable Item A." Rename your
-   items and your stands to whatever your shop sells.
+1. **Give it a theme.** Right now a stand sells "Consumable Placeholder" — it
+   says so right on the stand. Rename your items and your stands to whatever
+   your shop sells.
 2. **Replace the placeholder art** (the gray boxes in `assets/`) with real
    pictures.
 3. **Build your shop.** Add stands and set each one's level and income.
@@ -75,7 +76,7 @@ it makes sense. Click the node, look at the Inspector.
 
 | You want to change... | Click this | Setting |
 |---|---|---|
-| What a stand sells | a `Stand` | **Item Name** |
+| What a stand sells (shows on its name tag) | a `Stand` | **Item Name** |
 | How good a stand is (picture + income) | a `Stand` | **Tier** (Level 1/2/3) |
 | How much a stand earns | a `Stand` | **Base Income** |
 | A stand's pictures | a `Stand` | **Level 1/2/3 Texture** |
@@ -202,7 +203,7 @@ Then try the **`CHALLENGES.md`** ladder — small coding tasks that get harder.
       under it stop working, and **Play Again** starts a fresh run (day 1,
       starting money).
 - [ ] You **replaced the placeholder pictures** (no more gray boxes / Godot logo).
-- [ ] You **renamed** "Consumable Item A" and gave your stands real names.
+- [ ] You **renamed** "Consumable Placeholder" and gave your stands real names.
 - [ ] The **mission text matches** your real goal and deadline.
 - [ ] You turned **Show Debug Buttons off** on the HUD for the final version.
 - [ ] You saved with **Project > Tools > Download Project Source** (the web editor

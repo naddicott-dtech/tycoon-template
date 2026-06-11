@@ -12,7 +12,7 @@ extends Sprite2D
 # Higher levels earn more money per day.
 enum Tier { LEVEL_1, LEVEL_2, LEVEL_3 }
 
-@export var item_name: String = "Consumable Item A"   # what this stand sells (rename it!)
+@export var item_name: String = "Consumable Placeholder"   # what this stand sells (rename it!)
 @export var tier: Tier = Tier.LEVEL_1
 @export var base_income: int = 5      # money earned per day at LEVEL_1
 
@@ -32,6 +32,19 @@ func _ready() -> void:
 	# (that's how Upgrade All reaches all of them, and how upkeep is totaled).
 	add_to_group("stand")
 	_show_level_picture()
+	_show_item_name()
+
+# Copy item_name onto the StandLabel child — the stand's on-screen name tag.
+# Why set the name HERE and not by typing into the label directly? So everything
+# that makes a stand "yours" is one click away: select the Stand, and the name,
+# tier, income, and pictures are all together in the Inspector. The label is
+# just the display (Play overwrites whatever you type into it — Item Name on
+# the Stand is the real knob, same as Tier is for the picture). If the label
+# is missing, the stand still works — it just wears no name tag.
+func _show_item_name() -> void:
+	var tag := get_node_or_null("StandLabel")
+	if tag is Label:
+		tag.text = item_name
 
 func _on_day_ended(_day_number: int) -> void:
 	Globals.add_money(income_for_day())

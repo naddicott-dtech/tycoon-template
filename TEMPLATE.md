@@ -32,7 +32,7 @@ to `day_ended` in `_ready()`. No signal hookup needed.
 ## Tuning knobs (where each lives — see DECISIONS D-019)
 | Knob | Node / file | Type | Does |
 |---|---|---|---|
-| item_name | Stand | String | label of what it sells |
+| item_name | Stand | String | what it sells — shown on the StandLabel name tag |
 | tier | Stand | enum LEVEL_1/2/3 | picks income multiplier (×1/×3/×8) AND picture |
 | base_income | Stand | int | money/day at LEVEL_1 |
 | level_1/2/3_texture | Stand | Texture2D | picture per level |

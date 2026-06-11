@@ -12,6 +12,5 @@ script = ExtResource("1_6iamk")
 
 [node name="Stand" parent="Entities" instance=ExtResource("1_ksju7")]
 position = Vector2(578, 302)
-tier = 1
 
 [node name="Spawners" type="Node2D" parent="."]
